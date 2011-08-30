@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx" 
+		width="100%"
+		height="100%"
+		xmlns:local="*" 
+		xmlns:ir="org.beeant.controls.GraphicElement.*">
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("org.beeant.controls.RuleComponent.HRule")]
+	</fx:Metadata>
+	
+	<!-- Declaration for the dynamic SkinPart for tickline Labels --> 
+	<fx:Declarations>
+		<fx:Component id="tickLineLabel">
+			<s:Label text="Label" fontSize="8" fontWeight="normal"  paddingTop="-4"/>
+		</fx:Component>
+	</fx:Declarations>
+	
+	<s:Group id="rulerGroup" width="100%" height="100%" clipAndEnableScrolling="true">
+		<ir:HRulerGraphicElement
+			id="ruler" 
+			width="100%"
+			height="100%"
+			divisions="24" 
+			subdivisions="10" >
+			<ir:fill>
+				<s:LinearGradient rotation="90">
+					<s:GradientEntry color="0xFFFFFF" ratio="0" />
+					<s:GradientEntry color="0xFFFFFF" ratio="1" />
+				</s:LinearGradient>
+			</ir:fill>
+			<ir:stroke>
+				<s:SolidColorStroke color="0x000000" />
+			</ir:stroke>
+		</ir:HRulerGraphicElement>
+	</s:Group>
+</s:Skin>
