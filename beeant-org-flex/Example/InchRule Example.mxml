@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   minWidth="955" minHeight="600" 
+			   xmlns:InchRule="org.beeant.controls.InchRule.*"
+			   mouseMove="Example_mouseMoveHandler(event)">
+
+	<fx:Script>
+		<![CDATA[
+			import spark.events.IndexChangeEvent;
+			protected function Example_mouseMoveHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				//Mouse Move to indicate the Red Pointer
+				inchRule.mouseMoveHandler(this.mouseX, this.mouseY);
+			}
+
+			protected function cmbRulerType_changeHandler(event:IndexChangeEvent):void
+			{
+				// TODO Auto-generated method stub
+				inchRule.rulerType(cmbRulerType.selectedIndex);
+			}
+
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HGroup width="100%" height="100%" clipAndEnableScrolling="true">
+		<InchRule:InchRule id="inchRule" width="100%" height="100%">
+			<!-- No Need to assign the Width Height It assigns Directly -->
+			<s:VGroup horizontalAlign="center" verticalAlign="middle">
+				<s:Label text="Your Components Can be Placed Here" fontSize="18" />
+				<s:ComboBox id="cmbRulerType" change="cmbRulerType_changeHandler(event)">
+					<s:dataProvider>
+						<s:ArrayList>
+							<fx:String>inch</fx:String>
+							<fx:String>cm</fx:String>
+						</s:ArrayList>
+					</s:dataProvider>
+				</s:ComboBox>
+			</s:VGroup>
+		</InchRule:InchRule>
+	</s:HGroup>
+	
+</s:Application>

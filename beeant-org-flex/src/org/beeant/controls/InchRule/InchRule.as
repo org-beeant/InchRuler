@@ -106,8 +106,8 @@ package org.beeant.controls.InchRule
 		public function set labelDistance(value:Number):void
 		{
 			_labelDistance = value;
-			hRule.labelDistance = _labelDistance;
-			vRule.labelDistance = _labelDistance;
+			hRule.labelDistance = _labelDistance; // Label Distance for Hrule
+			vRule.labelDistance = _labelDistance; // Label Distance for VRule
 			_creationComplete();
 		}
 		
@@ -121,6 +121,7 @@ package org.beeant.controls.InchRule
 			coincidenceBox.width = rulerThickness;
 			coincidenceBox.height = rulerThickness;
 			
+			//Setting the Properties for the Rule.
 			hRule.width = this.unscaledWidth - rulerThickness;
 			hRule.height = rulerThickness;
 			hRule.labels = _horizantalLabel();
@@ -186,11 +187,11 @@ package org.beeant.controls.InchRule
 			}
 			child = children[0] as DisplayObject;
 			
-			this.addChild(coincidenceBox);
-			hRule.setStyle("skinClass",Class(org.beeant.skins.HRulerSkin));
-			vRule.setStyle("skinClass",Class(org.beeant.skins.VRulerSkin));
-			this.addChild(hRule);
-			this.addChild(vRule);
+			this.addChild(coincidenceBox); // Coincidence Box
+			hRule.setStyle("skinClass",Class(org.beeant.skins.HRulerSkin)); // Skin Class for HRule
+			vRule.setStyle("skinClass",Class(org.beeant.skins.VRulerSkin)); // Skin Class for VRule 
+			this.addChild(hRule); // Adds Hrule
+			this.addChild(vRule); // Adds Vrule
 		}
 		
 		/**
@@ -198,25 +199,30 @@ package org.beeant.controls.InchRule
 		 */ 
 		public function mouseMoveHandler(xValue:Number, yValue:Number):void
 		{
-			hRule.mouseMove(xValue - this.x - rulerThickness);
-			vRule.mouseMove(yValue - this.y - rulerThickness);
+			hRule.mouseMove(xValue - this.x - rulerThickness); // Mouse Move on HRUlE
+			vRule.mouseMove(yValue - this.y - rulerThickness); // Mouse Move on VRUlE
 		}
-		
-		public function converstion(sToConvert:String):void
+		/**
+		 * change the rule to CM
+		 * @param iToConvert is integer
+		 * 0 for InchRuler
+		 * 1 for Centimeter
+		 */ 
+		public function rulerType(iToConvert:int):void
 		{
-			if(sToConvert == "inch")
+			if(iToConvert == 0) // Checks Whether it is inch or CM
 			{
-				if(sToConvert != sRulerStatus)
+				if(sRulerStatus != "inch")
 				{
-					this.labelDistance = this.labelDistance * 2.54;
+					this.labelDistance = this.labelDistance * 2.54; // sets to Inch
 					sRulerStatus = "inch";
 				}
 			}
-			else
+			else if(iToConvert == 1)
 			{
-				if(sToConvert != sRulerStatus)
+				if(sRulerStatus != "cm")
 				{
-					this.labelDistance = this.labelDistance / 2.54;
+					this.labelDistance = this.labelDistance / 2.54; // sets to CM
 					sRulerStatus = "cm";
 				}
 			}
