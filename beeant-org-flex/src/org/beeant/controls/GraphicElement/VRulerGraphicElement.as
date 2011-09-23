@@ -5,7 +5,10 @@ package org.beeant.controls.GraphicElement
 	
 	import spark.primitives.supportClasses.FilledElement;
 
-	public class HRulerGraphicElement extends FilledElement
+	/**
+	 * Draws a Vertical Tick Lines in the Inch Ruler
+	 */ 	
+	public class VRulerGraphicElement extends FilledElement
 	{
 		/**
 		 * Commands to draw the tick lines 
@@ -30,17 +33,17 @@ package org.beeant.controls.GraphicElement
 		/**
 		 * Index for drawing commands 
 		 */
-		private var _ci:int = 0;
+		private var _ci:Number = 0;
 		
 		/**
 		 * Index for data commands 
 		 */
-		private var _di:int = 0;
+		private var _di:Number = 0;
 		
 		/**
 		 * Number of divisions 
 		 */
-		private var _divisions:int = 23;
+		private var _divisions:Number = 23;
 		
 		/**
 		 * Number of subdivisions 
@@ -62,7 +65,7 @@ package org.beeant.controls.GraphicElement
 		 */
 		private var graphic:Graphics;
 		
-		public function HRulerGraphicElement()
+		public function VRulerGraphicElement()
 		{
 			super();
 		}
@@ -76,14 +79,14 @@ package org.beeant.controls.GraphicElement
 		/**
 		 * Number of divisions 
 		 */
-		public function get divisions():int
+		public function get divisions():Number
 		{
 			return _divisions;
 		}
 		
-		public function set divisions(value:int):void
+		public function set divisions(value:Number):void
 		{
-			_divisions = Math.max(1, value);
+			_divisions = value;
 			invalidateDisplayList();
 		}
 		
@@ -164,10 +167,10 @@ package org.beeant.controls.GraphicElement
 			_di = 0;
 			
 			//height of subdivision tickline
-			var sdth:int = height * subdivisionToDivisionLineHeightRatio;
+			var sdth:Number = width * subdivisionToDivisionLineHeightRatio;
 			
 			//DivisionTickDistance
-			var dtd:Number = width/(divisions);
+			var dtd:Number = height/(divisions);
 			
 			//subdivision tick line distance
 			var sdtd:Number = dtd/subdivisions;
@@ -176,16 +179,16 @@ package org.beeant.controls.GraphicElement
 			var tx:Number = 0;
 			
 			//current height of tickline to draw
-			var th:int = height;
+			var th:Number = height;
 			
-			var cntr:int = 0;
+			var cntr:Number = 0;
 			
-			var ticks:int = (divisions) * subdivisions;
+			var ticks:Number = (divisions) * subdivisions;
 			
 			//the bottom line
 			_commands[_ci++] = GraphicsPathCommand.MOVE_TO;
+			_data[_di++] = gy + width;
 			_data[_di++] = gx;
-			_data[_di++] = gy + height;
 			
 			_commands[_ci++] = GraphicsPathCommand.LINE_TO;
 			_data[_di++] = gx + width;
@@ -203,12 +206,13 @@ package org.beeant.controls.GraphicElement
 				
 				//Tick
 				_commands[_ci++] = GraphicsPathCommand.MOVE_TO;
-				_data[_di++] = gx + tx;
-				_data[_di++] = gy + height;
+				_data[_di++] = gx + width;
+				_data[_di++] = gy + tx;
+				
 				
 				_commands[_ci++] = GraphicsPathCommand.LINE_TO;
-				_data[_di++] = gx + tx;
-				_data[_di++] = gy + th;
+				_data[_di++] = gx + th;
+				_data[_di++] = gy + tx;
 				
 				tx += sdtd;
 				cntr++;
@@ -229,24 +233,29 @@ package org.beeant.controls.GraphicElement
 			graphic.drawPath(_commands, _data);
 		}
 		
+		//------------------------------------------------------------------
+		//
+		// Pointer Showing the Mouse position in the HRuler
+		//
+		//------------------------------------------------------------------
 		/**
 		 * pointer shows the mouse location in the Ruler Element
 		 */ 
-		public function mouseMoveHandle(xValue:Number):void
+		public function mouseMoveHandle(yValue:Number):void
 		{
 			graphic.clear();
 			drawRuler();
 			_ci = 0;_di = 0;
 			
 			_commandsPointer[_ci++] = GraphicsPathCommand.MOVE_TO;
-			_dataPointer[_di++] = xValue;
-			_dataPointer[_di++] = height;
+			_dataPointer[_di++] = width;
+			_dataPointer[_di++] = yValue;
 			
 			_commandsPointer[_ci++] = GraphicsPathCommand.LINE_TO;
-			_dataPointer[_di++] = xValue;
 			_dataPointer[_di++] = 0;
+			_dataPointer[_di++] = yValue;
 			
-			graphic.lineStyle(strokeWeight * 1.5, 0xFF0000);
+			graphic.lineStyle(strokeWeight * 2, 0xFF0000);
 			graphic.drawPath(_commandsPointer, _dataPointer);
 		}
 	}

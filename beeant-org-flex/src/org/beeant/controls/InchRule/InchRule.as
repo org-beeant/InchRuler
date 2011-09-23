@@ -72,6 +72,7 @@ package org.beeant.controls.InchRule
 		{
 			super();
 			// Creation Complete Event
+			this.clipContent = true;
 			this.addEventListener(FlexEvent.CREATION_COMPLETE, _creationComplete);
 		}
 		
@@ -207,7 +208,7 @@ package org.beeant.controls.InchRule
 			{
 				if(sToConvert != sRulerStatus)
 				{
-					this.labelDistance = this.labelDistance * 2.5;
+					this.labelDistance = this.labelDistance * 2.54;
 					sRulerStatus = "inch";
 				}
 			}
@@ -215,7 +216,7 @@ package org.beeant.controls.InchRule
 			{
 				if(sToConvert != sRulerStatus)
 				{
-					this.labelDistance = this.labelDistance / 2.5;
+					this.labelDistance = this.labelDistance / 2.54;
 					sRulerStatus = "cm";
 				}
 			}
